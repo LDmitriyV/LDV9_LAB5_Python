@@ -39,10 +39,12 @@ class Main(QDialog):
         if path_to_file:
             file = open(path_to_file, 'r')
 
+
+
             data = file.readlines()
             # выводим считанные данные на экран
-            for lines in data:
-                self.plainTextEdit.appendPlainText(lines.strip('\n'))
+            # for lines in data:
+            #     self.plainTextEdit.appendPlainText(lines.strip('\n'))
 
 
             global list_of_numbers
@@ -54,6 +56,11 @@ class Main(QDialog):
             for lines in data:
                 lineSplit = lines.split()
                 list_of_numbers.append(lineSplit)
+            for lists in list_of_numbers:
+                for i in lists:
+                    new_str = "{:5}".format(str(i))
+                    self.plainTextEdit.insertPlainText(new_str)
+                self.plainTextEdit.appendPlainText("")
 
     def process_data(self):
         if validation_of_data():
@@ -62,15 +69,16 @@ class Main(QDialog):
 
             # -*- выполнение задания -*-
             if find_one == 2:
-                num_change()
+
                 reducing_max_num_of_double(max_num)
+                num_change()
 
                 self.plainTextEdit.appendPlainText("Данные обработаны! " + '\n')
 
                 # выводим список на экран
                 for lists in list_of_numbers:
                     for i in lists:
-                        new_str = "{:7}".format(str(i))
+                        new_str = "{:5}".format(str(i))
                         self.plainTextEdit.insertPlainText(new_str)
                     self.plainTextEdit.appendPlainText("")
             else:
@@ -92,7 +100,7 @@ class Main(QDialog):
 
             for lists in list_of_numbers:
                 for i in lists:
-                    new_str = "{:6}".format(str(i))
+                    new_str = "{:5}".format(str(i))
                     file.write(new_str)
                 file.write("\n")
 
@@ -146,11 +154,11 @@ def reducing_max_num_of_double(max_num):
     :param max_num: максимальное число
     :return: pass
     """
-    for lists in list_of_numbers:
-        for n, i in enumerate(lists):
-            if int(i) == max_num:
-                lists[n] = str(max_num / 2)
-                break
+
+    for j in range(len(list_of_numbers[0])):
+        if int(list_of_numbers[0][j]) == max_num:
+            list_of_numbers[0][j] = str(max_num / 2)
+            break
     pass
 
 
@@ -159,12 +167,10 @@ def find_one_of_second_column():
     находим единицу во втором столбце
     :return: число едениц
     """
-    i = 0
     one_count =0
     for i in range(len(list_of_numbers)):
         for j in range(len(list_of_numbers[i])):
         # перебираем каждую строку
-            sfgkdjhf = list_of_numbers[i]
             if j == 1:
                 if int(list_of_numbers[i][j]) == 1:  # если второй элемент строки равен 1
                     one_count += 1
@@ -176,11 +182,11 @@ def num_change():
     замена 1 на 0
     """
 
-    for lists in list_of_numbers:
-        for n, i in enumerate(lists):
-            if int(i) == 1:
-                lists[n] = str(0)
-                break
+    for i in range(len(list_of_numbers)):
+        for j in range(len(list_of_numbers[i])):
+            if float(list_of_numbers[i][j]) == 1:
+                list_of_numbers[i][j] = str(0)
+
 
 
 def main():
